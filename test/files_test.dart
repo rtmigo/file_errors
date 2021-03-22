@@ -14,7 +14,7 @@ import 'package:path/path.dart' as path;
 
 void main() {
 
-  Directory tempDir = Directory("/tmp"); // will redefined
+  late Directory tempDir;
 
   setUp(() {
     tempDir = Directory.systemTemp.createTempSync();
