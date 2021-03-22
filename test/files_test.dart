@@ -23,16 +23,21 @@ void main() {
     tempDir.deleteSync(recursive: true);
   });
 
-  void testErrorCode(String testName, bool Function(int x) isXxx, void Function() errorAction, ) {
-    bool caught = false;
-    try {
-      errorAction();
-    } on FileSystemException catch (e)
+  void testErrorCode(String testName, bool Function(int x) isXxx, void Function() errorAction, {bool raise=false}) {
+    test(testName, ()
     {
-      caught = true;
-      expect(isXxx(e.osError!.errorCode), isTrue);
-    }
-    expect(caught, true);
+      bool caught = false;
+      try {
+        errorAction();
+      } on FileSystemException catch (e) {
+        caught = true;
+        if (raise) {
+          rethrow;
+        }
+        expect(isXxx(e.osError!.errorCode), isTrue);
+      }
+      expect(caught, true);
+    });
   }
 
   testErrorCode('list non-existent directory', isDirectoryNotExistsCode, () {
