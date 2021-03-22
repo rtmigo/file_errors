@@ -46,9 +46,9 @@ void main() {
     expect(caught, true);
   });
 
-  group('file not exists', ()
+  group('file not exists |', ()
   {
-    test('open non-existent file', () async {
+    test('open non-existent file', () {
       bool caught = false;
       try {
         File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
@@ -59,7 +59,7 @@ void main() {
       expect(caught, true);
     });
 
-    test('open file in non-existent directory', () async {
+    test('open file for reading in non-existent directory', () {
       // same as open non-existent file
       bool caught = false;
       try {
@@ -67,11 +67,12 @@ void main() {
       } on FileSystemException catch (e) {
         caught = true;
         expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
+        rethrow;
       }
       expect(caught, true);
     });
 
-    test('create file in non-existent directory', () async {
+    test('open file for writing in non-existent directory', () {
       // same as open non-existent file
       bool caught = false;
       try {
@@ -82,6 +83,19 @@ void main() {
       }
       expect(caught, true);
     });
+
+    // test('create file for writing in non-existent directory', () {
+    //   // same as open non-existent file
+    //   bool caught = false;
+    //   try {
+    //     File(path.join(tempDir.path, 'non_existent/file.txt')).createSync();
+    //   } on FileSystemException catch (e) {
+    //     caught = true;
+    //     expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
+    //   }
+    //   expect(caught, true);
+    // });
+
   });
 
 
