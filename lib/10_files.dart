@@ -28,8 +28,8 @@ bool isFileNotFoundException(FileSystemException e) {
 const int LINUX_ENOTEMPTY = 39;
 const int LINUX_ENOENT = 2;
 
-// there is no official list of macOS errors for 2021.
-// I have to catch them in the woods
+// As strange as it may sound, there is still
+// no official list of macOS system errors in 2021
 const int MACOS_NOT_EMPTY = 66;
 const int MACOS_NO_SUCH_FILE = LINUX_ENOENT;
 
@@ -82,6 +82,22 @@ bool isDirectoryNotEmptyCode(int errorCode)
 
   // assuming we are on *nix
   return errorCode == LINUX_ENOTEMPTY;
+}
+
+bool isFileNotExistsCode(int errorCode ) {
+  // Ubuntu:
+  // FileSystemException: Cannot open file, path = '...'
+  // (OS Error: No such file or directory, errno = 2)
+  //
+  // Windows:
+  // FileSystemException: Cannot open file, path = '...'
+  // (OS Error: The system cannot find the file specified., errno = 2)
+  //
+  // MacOS:
+  // FileSystemException: Cannot open file, path = '...'
+  // (OS Error: No such file or directory, errno = 2)
+
+  return errorCode == 2;
 }
 
 

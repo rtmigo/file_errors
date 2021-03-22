@@ -12,6 +12,8 @@ import 'package:test/test.dart';
 
 
 
+
+
 void main() {
 
   late Directory tempDir;
@@ -47,7 +49,6 @@ void main() {
     {
       caught = true;
       expect(isDirectoryNotEmptyCode(e.osError!.errorCode), isTrue);
-      rethrow;
     }
     expect(caught, true);
   });
@@ -61,7 +62,7 @@ void main() {
     } on FileSystemException catch (e)
     {
       caught = true;
-      //expect(isDirectoryNotEmptyCode(e.osError!.errorCode), isTrue);
+      expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
       rethrow;
     }
     expect(caught, true);
