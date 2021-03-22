@@ -24,7 +24,15 @@ void main() {
 
   test('list non-existent directory', () async {
     final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
-    nonExistentDir.listSync();
+    bool caught = false;
+    try {
+      nonExistentDir.listSync();
+    } on FileSystemException catch (e)
+    {
+      caught = true;
+      expect(isDirectoryNotExistsCode(e.osError!.errorCode), isTrue);
+    }
+    expect(caught, true);
   });
 
 
