@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: (c) 2020 Art Galkin <ortemeo@gmail.com>
+// SPDX-FileCopyrightText: (c) 2021 Art Galkin <github.com/rtmigo>
 // SPDX-License-Identifier: BSD-3-Clause
 
 import 'dart:io';
@@ -46,45 +46,42 @@ void main() {
     expect(caught, true);
   });
 
-  test('open non-existent file', () async {
-    bool caught = false;
-    try {
-      File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
-    } on FileSystemException catch (e)
-    {
-      caught = true;
-      expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
-      //rethrow;
-    }
-    expect(caught, true);
-  });
+  group('file not exists', ()
+  {
+    test('open non-existent file', () async {
+      bool caught = false;
+      try {
+        File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
+      } on FileSystemException catch (e) {
+        caught = true;
+        expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
+      }
+      expect(caught, true);
+    });
 
-  test('open file in non-existent directory', () async {
-    // same as open non-existent file
-    bool caught = false;
-    try {
-      File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
-    } on FileSystemException catch (e)
-    {
-      caught = true;
-      expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
-      //rethrow;
-    }
-    expect(caught, true);
-  });
+    test('open file in non-existent directory', () async {
+      // same as open non-existent file
+      bool caught = false;
+      try {
+        File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
+      } on FileSystemException catch (e) {
+        caught = true;
+        expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
+      }
+      expect(caught, true);
+    });
 
-  test('create file in non-existent directory', () async {
-    // same as open non-existent file
-    bool caught = false;
-    try {
-      File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
-    } on FileSystemException catch (e)
-    {
-      caught = true;
-      //expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
-      rethrow;
-    }
-    expect(caught, true);
+    test('create file in non-existent directory', () async {
+      // same as open non-existent file
+      bool caught = false;
+      try {
+        File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
+      } on FileSystemException catch (e) {
+        caught = true;
+        expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
+      }
+      expect(caught, true);
+    });
   });
 
 
