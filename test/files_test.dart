@@ -20,10 +20,14 @@ void main() {
   });
 
   tearDown(() {
-    tempDir.deleteSync(recursive: true);
+    try {
+      tempDir.deleteSync(recursive: true);
+    } on FileSystemException {
+      print("WARNING: Failed to delete temp directory. Windows, what's wrong with you?")
+    }
   });
 
-  void testErrorCode(String testName, void Function() errorAction, {bool Function(int x)? isXxx, bool expectException=true, bool raise=false}) {
+  void testErrorCode(String testName, void Function() errorAction, {bool Function(int x)? isXxx, bool expectException=true, bool reraise=false}) {
     test(testName, ()
     {
       bool caught = false;
@@ -31,7 +35,7 @@ void main() {
         errorAction();
       } on FileSystemException catch (e) {
         caught = true;
-        if (raise) {
+        if (reraise) {
           rethrow;
         }
         if (isXxx!=null) {
