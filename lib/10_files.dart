@@ -84,7 +84,7 @@ bool isDirectoryNotEmptyCode(int errorCode)
   return errorCode == LINUX_ENOTEMPTY;
 }
 
-bool isFileNotExistsCode(int errorCode ) {
+bool isFileNotExistsCode(int errorCode) {
   // Ubuntu:
   // FileSystemException: Cannot open file, path = '...'
   // (OS Error: No such file or directory, errno = 2)
@@ -99,5 +99,11 @@ bool isFileNotExistsCode(int errorCode ) {
 
   return errorCode == 2;
 }
+
+// /// An exception is thrown when an attempt is made to open
+// /// a file located in a non-existent directory
+// bool isFileOrDirectoryNotExistsCode(int errorCode) {
+//
+// }
 
 

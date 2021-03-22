@@ -7,6 +7,8 @@ import 'package:file_errors/10_files.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
+//import '../lib/10_files.dart';
+
 void main() {
 
   late Directory tempDir;
@@ -28,6 +30,24 @@ void main() {
     {
       caught = true;
       expect(isDirectoryNotExistsCode(e.osError!.errorCode), isTrue);
+    }
+    expect(caught, true);
+  });
+
+  test('open file for reading in non-existent directory', () {
+    // same as open non-existent file
+    bool caught = false;
+    try {
+      File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
+    } on FileSystemException catch (e) {
+      caught = true;
+      // ubu
+      //    FileSystemException: Cannot open file, path = '/tmp/IOYRHX/non_existent/file.txt'
+      //    (OS Error: No such file or directory, errno = 2)
+      //
+      //throw;
+      expect(isDirectoryNotExistsCode(e.osError!.errorCode), isTrue);
+
     }
     expect(caught, true);
   });
@@ -59,19 +79,7 @@ void main() {
       expect(caught, true);
     });
 
-    test('open file for reading in non-existent directory', () {
-      // same as open non-existent file
-      bool caught = false;
-      try {
-        File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
-      } on FileSystemException catch (e) {
-        caught = true;
-        rethrow;
-        //expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
 
-      }
-      expect(caught, true);
-    });
 
     test('open file for writing in non-existent directory', () {
       // same as open non-existent file
