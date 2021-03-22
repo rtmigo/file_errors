@@ -23,7 +23,7 @@ void main() {
     tempDir.deleteSync(recursive: true);
   });
 
-  void testErrorCode(String testName, void Function() errorAction, {bool Function(int x)? isXxx, bool raise=false}) {
+  void testErrorCode(String testName, void Function() errorAction, {bool Function(int x)? isXxx, bool mustBeCaught=true, bool raise=false}) {
     test(testName, ()
     {
       bool caught = false;
@@ -60,6 +60,10 @@ void main() {
     testErrorCode('create file', () {
       File(path.join(tempDir.path, 'non_existent/file.txt')).createSync();
     }, isXxx: isDirectoryNotExistsCode);
+
+    testErrorCode('doing nothing', () {
+      Directory(path.join(tempDir.path, 'nonExistent'));
+    }, mustBeCaught: false);
   });
 
 
