@@ -23,7 +23,7 @@ void main() {
     tempDir.deleteSync(recursive: true);
   });
 
-  void testErrorCode(String testName, void Function() errorAction, {bool Function(int x)? isXxx, bool mustBeCaught=true, bool raise=false}) {
+  void testErrorCode(String testName, void Function() errorAction, {bool Function(int x)? isXxx, bool expectException=true, bool raise=false}) {
     test(testName, ()
     {
       bool caught = false;
@@ -38,7 +38,7 @@ void main() {
           expect(isXxx(e.osError!.errorCode), isTrue);
         }
       }
-      expect(caught, true);
+      expect(caught, expectException);
     });
   }
 
@@ -49,11 +49,11 @@ void main() {
       nonExistentDir.listSync();
     }, isXxx: isDirectoryNotExistsCode);
 
-    testErrorCode('open file', () {
+    testErrorCode('open file for reading', () {
       File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
     }, isXxx: isDirectoryNotExistsCode);
 
-    testErrorCode('open file', () {
+    testErrorCode('open file for writing', () {
       File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
     }, isXxx: isDirectoryNotExistsCode);
 
@@ -63,8 +63,31 @@ void main() {
 
     testErrorCode('doing nothing', () {
       Directory(path.join(tempDir.path, 'nonExistent'));
-    }, mustBeCaught: false);
+    }, expectException: false);
   });
+
+  group('non-existent file', ()
+  {
+    testErrorCode('open for writing', () {
+      File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write);
+    }, expectException: false);
+    //
+    // testErrorCode('open file', () {
+    //   File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
+    // }, isXxx: isDirectoryNotExistsCode);
+    //
+    // testErrorCode('open file', () {
+    //   File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
+    // }, isXxx: isDirectoryNotExistsCode);
+    //
+    // testErrorCode('create file', () {
+    //   File(path.join(tempDir.path, 'non_existent/file.txt')).createSync();
+    // }, isXxx: isDirectoryNotExistsCode);
+    //
+    // testErrorCode('doing nothing', () {
+    //   Directory(path.join(tempDir.path, 'nonExistent'));
+    // }, expectException: false);
+  });  
 
 
   // test('list non-existent directory', ()  {
