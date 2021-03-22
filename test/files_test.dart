@@ -10,6 +10,8 @@ import 'package:file_errors/10_files.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
+
+
 void main() {
 
   late Directory tempDir;
@@ -44,7 +46,7 @@ void main() {
     } on FileSystemException catch (e)
     {
       caught = true;
-      //expect(isDirectoryNotExistsCode(e.osError!.errorCode), isTrue);
+      expect(isDirectoryNotEmptyCode(e.osError!.errorCode), isTrue);
       rethrow;
     }
     expect(caught, true);

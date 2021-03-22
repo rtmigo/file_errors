@@ -58,36 +58,31 @@ bool isDirectoryNotExistsCode(int errorCode) {
   return errorCode == LINUX_ENOENT;
 }
 
-/// If directory exists, returns the result of [Directory.listSync]. 
-/// Otherwise returns empty list.
-List<FileSystemEntity> listSyncOrEmpty(Directory d, {bool recursive = false}) {
-  try {
-    return d.listSync(recursive: recursive);
-  }
-  on FileSystemException catch (e) {
-
-    if (Platform.isWindows && e.osError?.errorCode == WINDOWS_ERROR_PATH_NOT_FOUND)
-      return [];
-    if ((Platform.isMacOS||Platform.isIOS) && e.osError?.errorCode == MACOS_NO_SUCH_FILE)
-      return [];
-    // assuming we're on a kind of linux
-    if (e.osError?.errorCode==LINUX_ENOENT)
-      return [];
-
-    rethrow;
-  }
-}
-
-bool isDirectoryNotEmptyException(FileSystemException e)
+bool isDirectoryNotEmptyCode(int errorCode)
 {
-  if (Platform.isWindows && e.osError?.errorCode == WINDOWS_DIR_NOT_EMPTY)
-    return true;
+  // Ubuntu:
+  // FileSystemException: Deletion failed, path = '...'
+  // (OS Error: Directory not empty, errno = 39)
+  //
+  // MacOS:
+  // FileSystemException: Deletion failed, path = '...'
+  // (OS Error: Directory not empty, errno = 66)
+  //
+  // Windows:
+  // FileSystemException: Deletion failed, path = '...'
+  // (OS Error: The directory is not empty.
 
-  if ((Platform.isMacOS||Platform.isIOS) && e.osError?.errorCode == MACOS_NOT_EMPTY)
-    return true;
 
-  // assuming we're on a kind of linux
-  return e.osError?.errorCode == LINUX_ENOTEMPTY;
+  if (Platform.isWindows && errorCode == WINDOWS_DIR_NOT_EMPTY) {
+    return true;
+  }
+
+  if ((Platform.isMacOS||Platform.isIOS) && errorCode == MACOS_NOT_EMPTY) {
+    return true;
+  }
+
+  // assuming we are on *nix
+  return errorCode == LINUX_ENOTEMPTY;
 }
 
 void deleteDirIfEmptySync(Directory d) {
