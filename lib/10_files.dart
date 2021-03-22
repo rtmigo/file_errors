@@ -36,7 +36,7 @@ const int MACOS_NO_SUCH_FILE = LINUX_ENOENT;
 const int WINDOWS_DIR_NOT_EMPTY = 145; // 0x91
 const int WINDOWS_ERROR_PATH_NOT_FOUND = 3; // 0x3
 
-bool isDirectoryNotExistsCode(int errorCode) {
+//bool isDirectoryNotExistsCode(int errorCode) {
 
   // Ubuntu:
   // FileSystemException: Directory listing failed, path = '/tmp/EMSNTA/nonExistent/' (OS Error: No such file or directory, errno = 2)
@@ -51,7 +51,7 @@ bool isDirectoryNotExistsCode(int errorCode) {
   // // assuming we're on a kind of linux
   // if (e.osError?.errorCode==LINUX_ENOENT)
   //   return [];
-}
+//}
 
 /// If directory exists, returns the result of [Directory.listSync]. 
 /// Otherwise returns empty list.
