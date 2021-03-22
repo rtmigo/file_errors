@@ -30,16 +30,16 @@ void main() {
 
   test('listIfExists when exists', () async {
 
-    File(path.join(tempDir.path, "a.txt")).writeAsStringSync(":)");
-    File(path.join(tempDir.path, "b.txt")).writeAsStringSync("(:");
+    File(path.join(tempDir.path, 'a.txt')).writeAsStringSync(':)');
+    File(path.join(tempDir.path, 'b.txt')).writeAsStringSync('(:');
 
     expect(listSyncOrEmpty(tempDir).map((e) => path.basename(e.path)).toSet(), {'b.txt', 'a.txt'});
   });
 
   test('isDirNotEmpty', () async {
 
-    File(path.join(tempDir.path, "a.txt")).writeAsStringSync(":)");
-    File(path.join(tempDir.path, "b.txt")).writeAsStringSync("(:");
+    File(path.join(tempDir.path, 'a.txt')).writeAsStringSync(':)');
+    File(path.join(tempDir.path, 'b.txt')).writeAsStringSync('(:');
 
     bool raised = false;
     try {
