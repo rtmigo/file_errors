@@ -23,7 +23,11 @@ void main() {
     try {
       tempDir.deleteSync(recursive: true);
     } on FileSystemException catch (e) {
-      print("WARNING: Failed to delete temp directory. Windows, what's wrong with you?");
+      print('WARNING: Failed to delete temp directory.');
+      // sometimes it fails on windows with
+      // FileSystemException: Deletion failed, path = '...'
+      // (OS Error: The process cannot access the file because it is being used by another process.
+      // , errno = 32)
       print(e);
     }
   });
@@ -76,6 +80,18 @@ void main() {
     testErrorCode('open for writing', () {
       File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write);
     }, expectException: false);
+
+    testErrorCode('open for writing', () {
+      File(path.join(tempDir.path, 'file.txt')).createSync();
+    }, expectException: false);
+
+    testErrorCode('open for reading', () {
+      File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
+    }, isXxx: isFileNotExistsCode);
+
+
+
+
     //
     // testErrorCode('open file', () {
     //   File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
