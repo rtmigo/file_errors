@@ -23,7 +23,7 @@ void main() {
     tempDir.deleteSync(recursive: true);
   });
 
-  void testErrorCode(String testName, bool Function(int x) isXxx, void Function() errorAction, {bool raise=false}) {
+  void testErrorCode(String testName, void Function() errorAction, {bool Function(int x)? isXxx, bool raise=false}) {
     test(testName, ()
     {
       bool caught = false;
@@ -34,17 +34,26 @@ void main() {
         if (raise) {
           rethrow;
         }
-        expect(isXxx(e.osError!.errorCode), isTrue);
+        if (isXxx!=null) {
+          expect(isXxx(e.osError!.errorCode), isTrue);
+        }
       }
       expect(caught, true);
     });
   }
 
-  testErrorCode('list non-existent directory', isDirectoryNotExistsCode, () {
+  testErrorCode('list non-existent directory', () {
     final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
     nonExistentDir.listSync();
-  });
+  }, isXxx: isDirectoryNotExistsCode);
 
+  testErrorCode('open file for reading in non-existent directory', () {
+    File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
+  }, isXxx: isDirectoryNotExistsCode);
+
+  testErrorCode('open file for writing in non-existent directory', () {
+    File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
+  }, isXxx: isDirectoryNotExistsCode);
 
 
 
