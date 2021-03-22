@@ -24,7 +24,7 @@ void main() {
     tempDir.deleteSync(recursive: true);
   });
 
-  test('list non-existent directory', () async {
+  test('list non-existent directory', ()  {
     final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
     bool caught = false;
     try {
@@ -37,7 +37,7 @@ void main() {
     expect(caught, true);
   });
 
-  test('delete non-empty directory', () async {
+  test('delete non-empty directory', () {
     File(path.join(tempDir.path, 'file.txt')).writeAsStringSync('^_^');
 
     bool caught = false;
@@ -52,34 +52,19 @@ void main() {
     expect(caught, true);
   });
 
+  test('open non-existent file ', () async {
 
 
-  // test('listIfExists when does not exist', () async {
-  //   final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
-  //   expect(listSyncOrEmpty(nonExistentDir), []);
-  // });
-  //
-  // test('listIfExists when exists', () async {
-  //
-  //   File(path.join(tempDir.path, 'a.txt')).writeAsStringSync('^_^');
-  //   File(path.join(tempDir.path, 'b.txt')).writeAsStringSync('^_^');
-  //
-  //   expect(listSyncOrEmpty(tempDir).map((e) => path.basename(e.path)).toSet(), {'b.txt', 'a.txt'});
-  // });
-  //
-  // test('isDirNotEmpty', () async {
-  //
-  //   File(path.join(tempDir.path, 'a.txt')).writeAsStringSync('^_^');
-  //   File(path.join(tempDir.path, 'b.txt')).writeAsStringSync('^_^');
-  //
-  //   bool raised = false;
-  //   try {
-  //     tempDir.deleteSync(recursive: false);
-  //   } on FileSystemException catch (e) {
-  //     raised = true;
-  //     expect(isDirectoryNotEmptyException(e), isTrue);
-  //   }
-  //
-  //   expect(raised, isTrue);
-  // });
+    bool caught = false;
+    try {
+      File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
+    } on FileSystemException catch (e)
+    {
+      caught = true;
+      //expect(isDirectoryNotEmptyCode(e.osError!.errorCode), isTrue);
+      rethrow;
+    }
+    expect(caught, true);
+  });
+
 }

@@ -72,7 +72,6 @@ bool isDirectoryNotEmptyCode(int errorCode)
   // FileSystemException: Deletion failed, path = '...'
   // (OS Error: The directory is not empty.
 
-
   if (Platform.isWindows && errorCode == WINDOWS_DIR_NOT_EMPTY) {
     return true;
   }
@@ -85,24 +84,4 @@ bool isDirectoryNotEmptyCode(int errorCode)
   return errorCode == LINUX_ENOTEMPTY;
 }
 
-void deleteDirIfEmptySync(Directory d) {
-  try {
-    d.deleteSync(recursive: false);
-  } on FileSystemException catch (e) {
-
-    if (!isDirectoryNotEmptyException(e))
-      print("WARNING: Got unexpected osError.errorCode=${e.osError?.errorCode} "
-          "trying to remove directory.");
-  }
-}
-
-bool deleteSyncCalm(File file) {
-  try {
-    file.deleteSync();
-    return true;
-  } on FileSystemException catch (e) {
-    print("WARNING: Failed to delete $file: $e");
-    return false;
-  }
-}
 
