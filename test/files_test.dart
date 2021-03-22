@@ -42,19 +42,25 @@ void main() {
     });
   }
 
-  testErrorCode('list non-existent directory', () {
-    final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
-    nonExistentDir.listSync();
-  }, isXxx: isDirectoryNotExistsCode);
+  group('non-existent directory', ()
+  {
+    testErrorCode('list', () {
+      final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
+      nonExistentDir.listSync();
+    }, isXxx: isDirectoryNotExistsCode);
 
-  testErrorCode('open file for reading in non-existent directory', () {
-    File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
-  }, isXxx: isDirectoryNotExistsCode);
+    testErrorCode('open file', () {
+      File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
+    }, isXxx: isDirectoryNotExistsCode);
 
-  testErrorCode('open file for writing in non-existent directory', () {
-    File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
-  }, isXxx: isDirectoryNotExistsCode);
+    testErrorCode('open file', () {
+      File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
+    }, isXxx: isDirectoryNotExistsCode);
 
+    testErrorCode('create file', () {
+      File(path.join(tempDir.path, 'non_existent/file.txt')).createSync();
+    }, isXxx: isDirectoryNotExistsCode);
+  });
 
 
   // test('list non-existent directory', ()  {
