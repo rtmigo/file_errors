@@ -35,6 +35,21 @@ void main() {
     expect(caught, true);
   });
 
+  test('delete non-empty directory', () async {
+    File(path.join(tempDir.path, 'file.txt')).writeAsStringSync('^_^');
+
+    bool caught = false;
+    try {
+      tempDir.deleteSync();
+    } on FileSystemException catch (e)
+    {
+      caught = true;
+      //expect(isDirectoryNotExistsCode(e.osError!.errorCode), isTrue);
+      rethrow;
+    }
+    expect(caught, true);
+  });
+
 
 
   // test('listIfExists when does not exist', () async {
