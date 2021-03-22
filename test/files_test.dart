@@ -22,8 +22,9 @@ void main() {
   tearDown(() {
     try {
       tempDir.deleteSync(recursive: true);
-    } on FileSystemException {
-      print("WARNING: Failed to delete temp directory. Windows, what's wrong with you?")
+    } on FileSystemException catch (e) {
+      print("WARNING: Failed to delete temp directory. Windows, what's wrong with you?");
+      print(e);
     }
   });
 
