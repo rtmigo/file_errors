@@ -5,6 +5,7 @@ labuda/
 reference/generated
 experiments
 draft
+errnos/
 
 # Files and directories created by pub
 .dart_tool/

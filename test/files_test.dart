@@ -3,13 +3,13 @@
 
 import 'dart:io';
 
-import 'package:file_errors/10_files.dart';
+import 'package:file_errors/codes.dart';
+import 'package:file_errors/exceptions.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
-//import '../lib/10_files.dart';
-
-//import '../lib/10_files.dart';
+typedef CheckCodeCallback = bool Function(int x);
+typedef CheckExceptionCallback = bool Function(FileSystemException exc);
 
 void main() {
 
@@ -32,170 +32,134 @@ void main() {
     }
   });
 
-  void testErrorCode(String testName, void Function() errorAction, {bool Function(int x)? isXxx, bool expectException=true, bool reraise=false}) {
-    test(testName, ()
-    {
-      bool caught = false;
-      try {
-        errorAction();
-      } on FileSystemException catch (e) {
-        caught = true;
-        if (reraise) {
-          rethrow;
+  void testErrorCode(String testName, {
+    void Function()? callBefore,
+    void Function()? callForError, 
+    List<CheckCodeCallback>? mustMatchErrorCode,
+    List<CheckExceptionCallback>? mustMatchException,
+    List<CheckExceptionCallback>? mustNotMatchException,
+    bool reraise=false
+  }) {
+
+    if ((mustMatchErrorCode!=null || mustMatchException!=null || mustNotMatchException!=null) && callForError==null) {
+      throw ArgumentError('no callForError');
+    }
+
+    test(testName, () {
+      callBefore?.call();
+      if (callForError!=null) {
+        bool caught = false;
+        try {
+          callForError.call();
+        } on FileSystemException catch (e) {
+          caught = true;
+          if (reraise) {
+            rethrow;
+          }
+          if (mustMatchErrorCode != null) {
+            for (final func in mustMatchErrorCode) {
+              expect(func(e.osError!.errorCode), isTrue, reason: func.toString());
+            }
+          }
+          if (mustMatchException != null) {
+            for (final func in mustMatchException) {
+              expect(func(e), isTrue, reason: func.toString());
+            }
+          }
+          if (mustNotMatchException != null) {
+            for (final func in mustNotMatchException) {
+              expect(func(e), isFalse, reason: func.toString());
+            }
+          }
+
         }
-        if (isXxx!=null) {
-          expect(isXxx(e.osError!.errorCode), isTrue);
-        }
+        expect(caught, isTrue);
       }
-      expect(caught, expectException);
     });
   }
 
   group('non-existent directory', ()
   {
-    testErrorCode('list', () {
-      final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
-      nonExistentDir.listSync();
-    }, isXxx: isDirectoryNotExistsCode);
+    // error
+    testErrorCode('list',
+        mustMatchErrorCode: [isNoDirectoryCode],
+        callForError: () {
+          final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
+          nonExistentDir.listSync();
+        });
 
-    testErrorCode('open file for reading', () {
-      File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
-    }, isXxx: isDirectoryNotExistsCode);
+    // error
+    testErrorCode('open file for reading',
+        mustMatchErrorCode: [isNoDirectoryCode, isNoFileOrParentCode],
+        mustMatchException: [isNoDirectoryException, isNoFileOrParentException],
+        mustNotMatchException: [isNotEmptyException],
+        callForError: () {
+          File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
+        });
 
-    testErrorCode('open file for writing', () {
-      File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
-    }, isXxx: isDirectoryNotExistsCode);
+    // error
+    testErrorCode('open file for writing',
+        mustMatchErrorCode: [isNoDirectoryCode, isNoFileOrParentCode],
+        callForError: () {
+          File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
+        });
 
-    testErrorCode('create file', () {
-      File(path.join(tempDir.path, 'non_existent/file.txt')).createSync();
-    }, isXxx: isDirectoryNotExistsCode);
+    // error
+    testErrorCode('create file',
+        mustMatchErrorCode: [isNoDirectoryCode, isNoFileOrParentCode],
+        callForError: ()=>File(path.join(tempDir.path, 'non_existent/file.txt')).createSync());
 
-    testErrorCode('doing nothing', () {
-      Directory(path.join(tempDir.path, 'nonExistent'));
-    }, expectException: false);
+    // no error
+    testErrorCode('doing nothing', 
+        callBefore: () {
+          Directory(path.join(tempDir.path, 'nonExistent'));
+        });
   });
 
-  group('non-existent file', ()
+  // error
+  testErrorCode('delete non-empty directory',
+      mustMatchErrorCode: [isNotEmptyCode],
+      mustMatchException: [isNotEmptyException],
+      mustNotMatchException: [isNoFileException],
+      callBefore: () => File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write),
+      callForError: ()=>tempDir.deleteSync());
+
+  // no error
+  testErrorCode('createSync does nothing for existent files',
+      callBefore: () {
+        File(path.join(tempDir.path, 'file.txt')).writeAsString('^_^');
+        File(path.join(tempDir.path, 'file.txt')).createSync();
+      });
+
+  // no error
+  testErrorCode('createSync does nothing for existent directories',
+      callBefore: () {
+        Directory(path.join(tempDir.path, 'subdir')).createSync();
+        Directory(path.join(tempDir.path, 'subdir')).createSync();
+      });
+
+
+  group('non-existent file in existing directory', ()
   {
-    testErrorCode('open for writing', () {
-      File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write);
-    }, expectException: false);
+    // no errors
+    testErrorCode('open for writing',
+      callBefore: () {
+        File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write);
+      });
 
-    testErrorCode('open for writing', () {
-      File(path.join(tempDir.path, 'file.txt')).createSync();
-    }, expectException: false);
+    // no errors
+    testErrorCode('create',
+      callBefore: () {
+        File(path.join(tempDir.path, 'file.txt')).createSync();
+      });
 
-    testErrorCode('open for reading', () {
-      File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
-    }, isXxx: isFileNotExistsCode);
-
-
-
-
-    //
-    // testErrorCode('open file', () {
-    //   File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
-    // }, isXxx: isDirectoryNotExistsCode);
-    //
-    // testErrorCode('open file', () {
-    //   File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
-    // }, isXxx: isDirectoryNotExistsCode);
-    //
-    // testErrorCode('create file', () {
-    //   File(path.join(tempDir.path, 'non_existent/file.txt')).createSync();
-    // }, isXxx: isDirectoryNotExistsCode);
-    //
-    // testErrorCode('doing nothing', () {
-    //   Directory(path.join(tempDir.path, 'nonExistent'));
-    // }, expectException: false);
-  });  
-
-
-  // test('list non-existent directory', ()  {
-  //   final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
-  //   bool caught = false;
-  //   try {
-  //     nonExistentDir.listSync();
-  //   } on FileSystemException catch (e)
-  //   {
-  //     caught = true;
-  //     expect(isDirectoryNotExistsCode(e.osError!.errorCode), isTrue);
-  //   }
-  //   expect(caught, true);
-  // });
-  //
-  // test('open file for reading in non-existent directory', () {
-  //   // same as open non-existent file
-  //   bool caught = false;
-  //   try {
-  //     File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
-  //   } on FileSystemException catch (e) {
-  //     caught = true;
-  //     // ubu
-  //     //    FileSystemException: Cannot open file, path = '/tmp/IOYRHX/non_existent/file.txt'
-  //     //    (OS Error: No such file or directory, errno = 2)
-  //     //
-  //     //throw;
-  //     expect(isDirectoryNotExistsCode(e.osError!.errorCode), isTrue);
-  //
-  //   }
-  //   expect(caught, true);
-  // });
-  //
-  // test('delete non-empty directory', () {
-  //   File(path.join(tempDir.path, 'file.txt')).writeAsStringSync('^_^');
-  //
-  //   bool caught = false;
-  //   try {
-  //     tempDir.deleteSync();
-  //   } on FileSystemException catch (e)
-  //   {
-  //     caught = true;
-  //     expect(isDirectoryNotEmptyCode(e.osError!.errorCode), isTrue);
-  //   }
-  //   expect(caught, true);
-  // });
-  //
-  // group('file not exists |', ()
-  // {
-  //   test('open non-existent file', () {
-  //     bool caught = false;
-  //     try {
-  //       File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
-  //     } on FileSystemException catch (e) {
-  //       caught = true;
-  //       expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
-  //     }
-  //     expect(caught, true);
-  //   });
-  //
-  //
-  //
-  //   // test('open file for writing in non-existent directory', () {
-  //   //   // same as open non-existent file
-  //   //   bool caught = false;
-  //   //   try {
-  //   //     File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
-  //   //   } on FileSystemException catch (e) {
-  //   //     caught = true;
-  //   //     expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
-  //   //   }
-  //   //   expect(caught, true);
-  //   // });
-  //
-  //   // test('create file for writing in non-existent directory', () {
-  //   //   // same as open non-existent file
-  //   //   bool caught = false;
-  //   //   try {
-  //   //     File(path.join(tempDir.path, 'non_existent/file.txt')).createSync();
-  //   //   } on FileSystemException catch (e) {
-  //   //     caught = true;
-  //   //     expect(isFileNotExistsCode(e.osError!.errorCode), isTrue);
-  //   //   }
-  //   //   expect(caught, true);
-  //   // });
-  //
-  // });
-
-
+    // error
+    testErrorCode('open for reading',
+      mustMatchErrorCode: [isNoFileCode, isNoFileOrParentCode],
+      mustMatchException: [isNoFileException, isNoFileOrParentException],
+      mustNotMatchException: [isNotEmptyException],
+      callForError: () {
+        File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
+      }, );
+  });
 }
