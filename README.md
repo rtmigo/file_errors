@@ -11,6 +11,10 @@ a caught `FileSystemException`:
 - `FileSystemException.isNoSuchFileOrDirectory`
 - `FileSystemException.isDirectoryNotEmpty`
 
+# Install
+
+# Use
+
 ## isNoSuchFileOrDirectory
 
 Occurs when:
