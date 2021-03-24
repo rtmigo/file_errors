@@ -6,7 +6,7 @@ A couple of **cross-platform** functions to help identify common errors when
 working with the file system.
 
 Some OSs report missing file or missing parent directory as two different 
-errors. Others report both problems with the same error code.  Dart throws the 
+errors. Others report both problems as the same error.  Dart throws the 
 same type of exception in all cases. You can try to analyze the `int` 
 error code, but error codes on different systems are different.
 
