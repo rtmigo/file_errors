@@ -1,5 +1,5 @@
-![Generic badge](https://img.shields.io/badge/status-it_works-ok.svg)
 [![Pub Package](https://img.shields.io/pub/v/file_errors.svg)](https://pub.dev/packages/file_errors)
+![Generic badge](https://img.shields.io/badge/status-it_works-ok.svg)
 [![Actions Status](https://github.com/rtmigo/file_errors/workflows/unittest/badge.svg?branch=master)](https://github.com/rtmigo/file_errors/actions)
 ![Generic badge](https://img.shields.io/badge/testing_on-Win_|_Mac_|_Linux-blue.svg)
 
