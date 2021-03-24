@@ -4,7 +4,6 @@
 import 'dart:io';
 
 import 'package:errno/errno.dart';
-import 'package:meta/meta.dart';
 
 bool isNoSuchFileOrDirectoryCode(int errorCode) {
   //
