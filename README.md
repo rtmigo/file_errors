@@ -2,7 +2,7 @@
 ![Generic badge](https://img.shields.io/badge/testing_on-Win_|_Mac_|_Linux-blue.svg)
 
 
-A couple of cross-platform functions to help identify common errors when 
+A couple of **cross-platform** functions to help identify common errors when 
 working with the file system.
 
 Some systems report missing file or missing parent directory as two different 
