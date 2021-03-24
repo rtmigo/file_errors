@@ -7,9 +7,9 @@ import 'package:file_errors/src/codes.dart';
 
 import 'codes.dart';
 
-bool isPathDoesNotExistException(FileSystemException exception) {
+bool isNoSuchPathException(FileSystemException exception) {
   int? code = exception.osError?.errorCode;
-  return (code!=null) ? isNoFileOrParentCode(code) : false;
+  return (code!=null) ? isNoSuchPathCode(code) : false;
 }
 
 // bool isNoFileException(FileSystemException exception) {

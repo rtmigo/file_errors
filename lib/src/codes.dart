@@ -67,6 +67,6 @@ bool _isNoFileCode(int errorCode) {
   return errorCode == 2;
 }
 
-bool isNoFileOrParentCode(int errorCode) {
+bool isNoSuchPathCode(int errorCode) {
   return _isNoFileCode(errorCode) | _isNoDirectoryCode(errorCode);
 }

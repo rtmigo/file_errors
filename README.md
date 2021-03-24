@@ -13,12 +13,12 @@ This library is designed to generalize error codes, reducing them to a "common
 denominator". It interprets the [OSError.errorCode](https://api.dart.dev/stable/dart-io/OSError/errorCode.html) 
 value depending on the current platform.
 
-Functions tested on Linux, Windows and MacOS. Unit tests did not run on 
-Android and iOS. But these mobile systems have the same kernels as desktop 
-systems. So the error messages are almost certainly the same.
+Functions tested on **Linux**, **Windows** and **MacOS**. Unit tests did not 
+run on **Android** and **iOS**. But these mobile systems have the same kernels 
+as desktop relatives. So the error messages are almost certainly the same.
 
 
-## isPathDoesNotExist
+## isNoSuchPath
 
 Occurs when:
 - Trying to open a non-existent file in an existing directory
@@ -33,7 +33,7 @@ Occurs when:
     
   } on FileSystemException catch (exc) {
     
-    if (isPathDoesNotExistException(exc)) {
+    if (isNoSuchPathException(exc)) {
       print('File does not exist!');
     }
     else {

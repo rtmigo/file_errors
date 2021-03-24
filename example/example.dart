@@ -9,7 +9,7 @@ void main() {
 
   } on FileSystemException catch (exc) {
 
-    if (isPathDoesNotExistException(exc)) {
+    if (isNoSuchPathException(exc)) {
       print('File does not exist!');
     }
     else {
