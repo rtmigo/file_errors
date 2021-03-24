@@ -17,6 +17,22 @@ Occurs when:
 - Trying to create a file in a non-existent directory
 - Trying to list a non-existent directory
 
+``` dart
+  try {
+    
+    print(File('filename.txt').readAsStringSync());
+    
+  } on FileSystemException catch (exc) {
+    
+    if (isPathDoesNotExistException(exc)) {
+      print('File does not exist!');
+    }
+    else {
+      print('Unknown error: $exc');
+    }
+  }
+```
+
 ## isNotEmpty
 
 Occurs when you try to delete a directory but it contains files.
