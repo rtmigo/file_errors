@@ -1,9 +1,7 @@
 ![Generic badge](https://img.shields.io/badge/status-draft-red.svg)
 ![Generic badge](https://img.shields.io/badge/testing_on-Win_|_Mac_|_Linux-blue.svg)
 
-
-**Cross-platform** extensions to help **identify** the **reason** for the 
-**`FileSystemException`** to occur during file operations.
+**Cross-platform** extensions that help determine the **cause** of the caught **FileSystemException**.
 
 Extensions were unit-tested on **Linux**, **Windows** and **MacOS**. 
 Mobile systems such as **Android** and **iOS** have the same kernels 
