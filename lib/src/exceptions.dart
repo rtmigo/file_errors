@@ -1,6 +1,9 @@
+// SPDX-FileCopyrightText: (c) 2021 Art Galkin <github.com/rtmigo>
+// SPDX-License-Identifier: UPL-1.0
+
 import 'dart:io';
 
-import 'package:file_errors/codes.dart';
+import 'package:file_errors/src/codes.dart';
 
 import 'codes.dart';
 

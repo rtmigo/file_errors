@@ -3,8 +3,7 @@
 
 import 'dart:io';
 
-import 'package:file_errors/codes.dart';
-import 'package:file_errors/exceptions.dart';
+import 'package:file_errors/file_errors.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
@@ -73,7 +72,7 @@ void main() {
           }
 
         }
-        expect(caught, isTrue);
+        expect(caught, isTrue, reason: 'there were no exceptions');
       }
     });
   }
@@ -162,4 +161,32 @@ void main() {
         File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
       }, );
   });
+
+  // i was unable to simulate locking.
+  // it seems to be tied to a process, but not to a particular object
+  /*
+  testErrorCode('trying to open locked file',
+
+      callForError: () {
+        final p = path.join(tempDir.path, 'locked.txt');
+        final locked = File(p);
+        //locked.writeAsStringSync('lock me');
+        RandomAccessFile? raf;
+        try {
+          raf = locked.openSync(mode: FileMode.write);
+          raf.lockSync(FileLock.blockingExclusive, 0, 6);
+          raf.writeStringSync('written in exclusive mode');
+
+          File(p).writeAsStringSync('haha');
+
+        }
+        finally {
+          if (raf!=null ) {
+            raf.unlockSync();
+            raf.closeSync();
+          }
+        }
+
+        print('READ ${File(p).readAsStringSync()}');
+      });*/
 }
