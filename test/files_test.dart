@@ -92,7 +92,7 @@ void main() {
     // error
     testErrorCode('open file for reading',
         mustMatchErrorCode: [isNoSuchPathCode],
-        mustMatchException: [isNoSuchPathException, isNoSuchDirectoryException],
+        mustMatchException: [isNoSuchPathException, isNoSuchDirectoryException, isDirectoryNotEmptyException],
         mustNotMatchException: [isDirectoryNotEmptyException],
         callForError: () {
           File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
