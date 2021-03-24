@@ -1,6 +1,6 @@
 name: file_errors
 description: "Cross-platform extensions that help determine the cause of a caught FileSystemException."
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/rtmigo/file_errors
 
 environment:
