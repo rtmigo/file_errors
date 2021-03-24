@@ -13,6 +13,8 @@ errors. Others report both problems as the same error. Dart throws the same
 type of exception not only for these two errors, but also for any file errors. 
 You can try to analyze the `int` error code, but error codes on different 
 systems are different.
+
+How, then, to understand that the exception was thrown due to the absence of a file?
 </details>
 
 This library is designed to generalize error codes, reducing them to a "common 
