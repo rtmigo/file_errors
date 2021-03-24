@@ -9,7 +9,7 @@ Some systems report missing file or missing parent directory as two different
 errors. Others report both problems with the same error code. In addition, 
 the error codes on different systems are different.
 
-This library is designed to summarize error codes, reducing them to a "common 
+This library is designed to generalize error codes, reducing them to a "common 
 denominator". It interprets the [OSError.errorCode](https://api.dart.dev/stable/dart-io/OSError/errorCode.html) 
 value depending on the current platform.
 
