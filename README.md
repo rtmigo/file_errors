@@ -2,9 +2,8 @@
 ![Generic badge](https://img.shields.io/badge/testing_on-Win_|_Mac_|_Linux-blue.svg)
 
 
-A couple of **cross-platform** functions to help identify common errors when 
-working with the file system.
-
+A couple of **cross-platform** functions to help identify the reason for the 
+`FileSystemException` to occur during file operations
 
 <details>
     <summary>What's the problem?</summary>
@@ -20,8 +19,8 @@ systems are different.
 </details>
 
 This library is designed to generalize error codes, reducing them to a "common 
-denominator". It interprets the [OSError.errorCode](https://api.dart.dev/stable/dart-io/OSError/errorCode.html) 
-value depending on the current platform.
+denominator". It interprets the `OSError.errorCode` value depending on the 
+current platform.
 
 Functions unit-tested on **Linux**, **Windows** and **MacOS**. Mobile systems 
 such as **Android** and **iOS** have the same kernels as their desktop 
