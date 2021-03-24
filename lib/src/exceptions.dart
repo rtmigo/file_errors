@@ -9,24 +9,15 @@ import 'codes.dart';
 
 bool _checkCode(FileSystemException exception, bool Function(int) check) {
   int? code = exception.osError?.errorCode;
-  return (code!=null) && check(code);
+  return (code != null) && check(code);
 }
 
-bool isNoSuchPathException(FileSystemException exception) {
-  return _checkCode(exception, isNoSuchPathCode);
+extension FileSystemExceptionExplanation on FileSystemException {
+  bool get isNoSuchFileOrDirectory {
+    return _checkCode(this, isNoSuchFileOrDirectoryCode);
+  }
+
+  bool get isDirectoryNotEmpty {
+    return _checkCode(this, isNotEmptyCode);
+  }
 }
-
-bool isNoSuchFileException(FileSystemException exception) {
-  return _checkCode(exception, isNoFileCode);
-}
-
-
-bool isNoSuchDirectoryException(FileSystemException exception) {
-  return _checkCode(exception, isNoSuchDirectoryCode);
-}
-
-
-bool isDirectoryNotEmptyException(FileSystemException exception) {
-  return _checkCode(exception, isNotEmptyCode);
-}
-
