@@ -11,7 +11,7 @@
 > How to understand that the exception was thrown due to the absence of a file?
 >    
 > For some OSs a missing file and a missing parent directory are two 
-> different problems. Other OSs see them as the same problem. On any OSs Dart 
+> different problems. Other OSs see them as the same problem. Dart 
 > throws the same type of exception not only for these two errors, 
 > but also for any file errors. The exception has `int` error code, but the 
 > error codes are different on different OSs.
