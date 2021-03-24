@@ -160,19 +160,18 @@ void main() {
 
     // error
     testErrorCode('open file for reading',
-      mustMatchErrorCode: [isNoSuchPathCode],
-      mustMatchException: [isNoSuchPathException],
-      mustNotMatchException: [isDirectoryNotEmptyException],
+      mustMatchException: [isNoSuchPathException, isNoSuchFileException],
+      mustNotMatchException: [isNoSuchDirectoryException],
       callForError: () {
         File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
       }, );
 
     // error
     testErrorCode('delete non-empty directory',
-        reraise: true,
+        //reraise: true,
         mustMatchErrorCode: [isNotEmptyCode],
         mustMatchException: [isDirectoryNotEmptyException],
-        mustNotMatchException: [isNoSuchPathException],
+        mustNotMatchException: [isNoSuchPathException, isNoSuchFileException],
         callBefore: () => File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write),
         callForError: ()=>tempDir.deleteSync());
   });

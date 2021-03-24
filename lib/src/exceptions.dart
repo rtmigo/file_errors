@@ -16,6 +16,11 @@ bool isNoSuchPathException(FileSystemException exception) {
   return _checkCode(exception, isNoSuchPathCode);
 }
 
+bool isNoSuchFileException(FileSystemException exception) {
+  return _checkCode(exception, isNoFileCode);
+}
+
+
 bool isNoSuchDirectoryException(FileSystemException exception) {
   return _checkCode(exception, isNoSuchDirectoryCode);
 }

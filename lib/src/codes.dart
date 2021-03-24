@@ -38,7 +38,7 @@ bool isNotEmptyCode(int errorCode) {
   //
   // Windows:
   // FileSystemException: Deletion failed, path = '...'
-  // (OS Error: The directory is not empty.
+  // (OS Error: The directory is not empty., errno = 145)
 
   if (Platform.isWindows && errorCode == WindowsErrors.dirNotEmpty) {
     return true;
@@ -52,7 +52,7 @@ bool isNotEmptyCode(int errorCode) {
   return errorCode == LinuxErrors.directoryNotEmpty;
 }
 
-bool _isNoFileCode(int errorCode) {
+bool isNoFileCode(int errorCode) {
   // Ubuntu:
   // FileSystemException: Cannot open file, path = '...'
   // (OS Error: No such file or directory, errno = 2)
@@ -69,5 +69,5 @@ bool _isNoFileCode(int errorCode) {
 }
 
 bool isNoSuchPathCode(int errorCode) {
-  return _isNoFileCode(errorCode) | isNoSuchDirectoryCode(errorCode);
+  return isNoFileCode(errorCode) | isNoSuchDirectoryCode(errorCode);
 }
