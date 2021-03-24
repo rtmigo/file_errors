@@ -5,7 +5,8 @@
 
 # [file errors](https://github.com/rtmigo/file_errors)
 
-**Cross-platform** extensions that help determine the **cause** of a caught `FileSystemException`.
+**Cross-platform** extensions that help determine the **cause** of 
+a caught `FileSystemException`:
 
 - `FileSystemException.isNoSuchFileOrDirectory`
 - `FileSystemException.isDirectoryNotEmpty`
