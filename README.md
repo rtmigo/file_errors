@@ -13,6 +13,10 @@ This library is designed to summarize error codes, reducing them to a "common
 denominator". It interprets the [OSError.errorCode](https://api.dart.dev/stable/dart-io/OSError/errorCode.html) 
 value depending on the current platform.
 
+Functions tested on Linux, Windows and MacOS. Unit tests did not run on 
+Android and iOS. But these mobile systems have the same kernels as desktop 
+systems. So the error messages will almost certainly be the same.
+
 ## isPathDoesNotExist
 
 Occurs when:
