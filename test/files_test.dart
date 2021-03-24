@@ -81,7 +81,7 @@ void main() {
   {
     // error
     testErrorCode('list',
-        mustMatchErrorCode: [isNoDirectoryCode],
+        mustMatchErrorCode: [isNoFileOrParentCode],
         callForError: () {
           final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
           nonExistentDir.listSync();
@@ -89,8 +89,8 @@ void main() {
 
     // error
     testErrorCode('open file for reading',
-        mustMatchErrorCode: [isNoDirectoryCode, isNoFileOrParentCode],
-        mustMatchException: [isNoDirectoryException, isNoFileOrParentException],
+        mustMatchErrorCode: [isNoFileOrParentCode],
+        mustMatchException: [isPathDoesNotExistException],
         mustNotMatchException: [isNotEmptyException],
         callForError: () {
           File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
@@ -98,14 +98,14 @@ void main() {
 
     // error
     testErrorCode('open file for writing',
-        mustMatchErrorCode: [isNoDirectoryCode, isNoFileOrParentCode],
+        mustMatchErrorCode: [isNoFileOrParentCode],
         callForError: () {
           File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
         });
 
     // error
     testErrorCode('create file',
-        mustMatchErrorCode: [isNoDirectoryCode, isNoFileOrParentCode],
+        mustMatchErrorCode: [isNoFileOrParentCode],
         callForError: ()=>File(path.join(tempDir.path, 'non_existent/file.txt')).createSync());
 
     // no error
@@ -119,7 +119,7 @@ void main() {
   testErrorCode('delete non-empty directory',
       mustMatchErrorCode: [isNotEmptyCode],
       mustMatchException: [isNotEmptyException],
-      mustNotMatchException: [isNoFileException],
+      mustNotMatchException: [isPathDoesNotExistException],
       callBefore: () => File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write),
       callForError: ()=>tempDir.deleteSync());
 
@@ -154,8 +154,8 @@ void main() {
 
     // error
     testErrorCode('open for reading',
-      mustMatchErrorCode: [isNoFileCode, isNoFileOrParentCode],
-      mustMatchException: [isNoFileException, isNoFileOrParentException],
+      mustMatchErrorCode: [isNoFileOrParentCode],
+      mustMatchException: [isPathDoesNotExistException],
       mustNotMatchException: [isNotEmptyException],
       callForError: () {
         File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);

@@ -7,20 +7,20 @@ import 'package:file_errors/src/codes.dart';
 
 import 'codes.dart';
 
-bool isNoFileOrParentException(FileSystemException exception) {
+bool isPathDoesNotExistException(FileSystemException exception) {
   int? code = exception.osError?.errorCode;
   return (code!=null) ? isNoFileOrParentCode(code) : false;
 }
 
-bool isNoFileException(FileSystemException exception) {
-  int? code = exception.osError?.errorCode;
-  return (code!=null) ? isNoFileCode(code) : false;
-}
-
-bool isNoDirectoryException(FileSystemException exception) {
-  int? code = exception.osError?.errorCode;
-  return (code!=null) ? isNoDirectoryCode(code) : false;
-}
+// bool isNoFileException(FileSystemException exception) {
+//   int? code = exception.osError?.errorCode;
+//   return (code!=null) ? isNoFileCode(code) : false;
+// }
+//
+// bool isNoDirectoryException(FileSystemException exception) {
+//   int? code = exception.osError?.errorCode;
+//   return (code!=null) ? isNoDirectoryCode(code) : false;
+// }
 
 bool isNotEmptyException(FileSystemException exception) {
   int? code = exception.osError?.errorCode;

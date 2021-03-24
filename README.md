@@ -9,21 +9,15 @@ These functions interpret the
 [OSError.errorCode](https://api.dart.dev/stable/dart-io/OSError/errorCode.html) 
 value depending on the current platform.
 
-## isNoFileOrParent
+## isPathDoesNotExist
 
-When you try to open a non-existent file, or a file in a non-existent 
-directory.
-1
-## isNoFile
-
-When you try to open a non-existent file. 
+Occurs when:
+- Trying to open a non-existent file in existing directory
+- Trying to open a file in a non-existent directory
+- Trying to create a file in a non-existent directory
+- Trying to list a non-existent directory
   
-## isNoDirectory
-
-When you try to list the files in a directory that does not exist. 
-On some operating systems, it also occurs when you try to open a file in a 
-directory that does not exist.
 
 ## isNotEmpty
 
-When you try to delete a directory but it contains files.
+Occurs when you try to delete a directory but it contains files.

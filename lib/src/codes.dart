@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'package:errno/errno.dart';
 
-bool isNoDirectoryCode(int errorCode) {
+bool _isNoDirectoryCode(int errorCode) {
   // Ubuntu:
   // FileSystemException: Directory listing failed, path = '...'
   // (OS Error: No such file or directory, errno = 2)
@@ -51,7 +51,7 @@ bool isNotEmptyCode(int errorCode) {
   return errorCode == LinuxErrors.directoryNotEmpty;
 }
 
-bool isNoFileCode(int errorCode) {
+bool _isNoFileCode(int errorCode) {
   // Ubuntu:
   // FileSystemException: Cannot open file, path = '...'
   // (OS Error: No such file or directory, errno = 2)
@@ -68,5 +68,5 @@ bool isNoFileCode(int errorCode) {
 }
 
 bool isNoFileOrParentCode(int errorCode) {
-  return isNoFileCode(errorCode) | isNoDirectoryCode(errorCode);
+  return _isNoFileCode(errorCode) | _isNoDirectoryCode(errorCode);
 }
