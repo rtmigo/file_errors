@@ -6,8 +6,10 @@ A couple of cross-platform functions to help identify common errors when
 working with the file system.
 
 Some systems report missing file or missing parent directory as two different 
-errors. Others generalize both problems to the same error code. In addition, 
+errors. Others report both problems with the same error code. In addition, 
 the error codes on different systems are different.
+
+
 
 These functions interpret the 
 [OSError.errorCode](https://api.dart.dev/stable/dart-io/OSError/errorCode.html) 
