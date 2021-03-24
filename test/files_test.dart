@@ -90,9 +90,19 @@ void main() {
         });
 
     // error
+    testErrorCode('delete',
+        //mustMatchErrorCode: [isNoSuchPathCode, ],
+        mustMatchException: [isNoSuchDirectoryException, isNoSuchPathException],
+        mustNotMatchException: [isDirectoryNotEmptyException],
+        callForError: () {
+          final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
+          nonExistentDir.deleteSync();
+        });
+
+    // error
     testErrorCode('open file for reading',
         mustMatchErrorCode: [isNoSuchPathCode],
-        mustMatchException: [isNoSuchPathException, isNoSuchDirectoryException, isDirectoryNotEmptyException],
+        mustMatchException: [isNoSuchPathException, isNoSuchDirectoryException],
         mustNotMatchException: [isDirectoryNotEmptyException],
         callForError: () {
           File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
@@ -119,14 +129,6 @@ void main() {
         });
   });
 
-  // error
-  testErrorCode('delete non-empty directory',
-      mustMatchErrorCode: [isNotEmptyCode],
-      mustMatchException: [isDirectoryNotEmptyException],
-      mustNotMatchException: [isNoSuchPathException],
-      callBefore: () => File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write),
-      callForError: ()=>tempDir.deleteSync());
-
   // no error
   testErrorCode('createSync does nothing for existent files',
       callBefore: () {
@@ -142,29 +144,40 @@ void main() {
       });
 
 
-  group('non-existent file in existing directory', ()
+  group('existing directory', ()
   {
     // no errors
-    testErrorCode('open for writing',
+    testErrorCode('open file for writing',
       callBefore: () {
         File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write);
       });
 
     // no errors
-    testErrorCode('create',
+    testErrorCode('create file',
       callBefore: () {
         File(path.join(tempDir.path, 'file.txt')).createSync();
       });
 
     // error
-    testErrorCode('open for reading',
+    testErrorCode('open file for reading',
       mustMatchErrorCode: [isNoSuchPathCode],
       mustMatchException: [isNoSuchPathException],
       mustNotMatchException: [isDirectoryNotEmptyException],
       callForError: () {
         File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
       }, );
+
+    // error
+    testErrorCode('delete non-empty directory',
+        reraise: true,
+        mustMatchErrorCode: [isNotEmptyCode],
+        mustMatchException: [isDirectoryNotEmptyException],
+        mustNotMatchException: [isNoSuchPathException],
+        callBefore: () => File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write),
+        callForError: ()=>tempDir.deleteSync());
   });
+
+  //**group('deleting directory', () {}
 
   // i was unable to simulate locking.
   // it seems to be tied to a process, but not to a particular object
