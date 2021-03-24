@@ -27,7 +27,7 @@ such as **Android** and **iOS** have the same kernels as their desktop
 relatives. So the error messages are almost certainly the same.
 
 
-## isNoSuchPath
+## isNoSuchFileOrDirectory
 
 Occurs when:
 - Trying to read a non-existent file in an existing directory
@@ -42,7 +42,7 @@ Occurs when:
     
   } on FileSystemException catch (exc) {
     
-    if (isNoSuchPathException(exc)) {
+    if (exc.isNoSuchFileOrDirectory) {
       print('File does not exist!');
     }
     else {
@@ -50,9 +50,6 @@ Occurs when:
     }
   }
 ```
-
-There is also a `isNoSuchPathCode(int errorCode)` function, if you want to 
-interpret `OSError.errorCode` yourself.
 
 ## isDirectoryNotEmpty
 
@@ -65,7 +62,7 @@ Occurs when you try to non-recursively delete a directory but it contains files.
     
   } on FileSystemException catch (exc) {
     
-    if (isDirectoryNotEmptyException(exc)) {
+    if (exc.isDirectoryNotEmpty) {
       print('Not empty!');
     }
     else {
@@ -73,5 +70,3 @@ Occurs when you try to non-recursively delete a directory but it contains files.
     }
   }
 ```
-
-Also available as `isDirectoryNotEmptyCode(int errorCode)`.
