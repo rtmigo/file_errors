@@ -44,7 +44,7 @@ Occurs when:
     
     // using property extension added by the library
     if (exc.isNoSuchFileOrDirectory) { 
-      print('Does not exist!');
+      print('It does not exist!');
     }
     else {
       print('Unknown error: $exc');
@@ -65,7 +65,7 @@ Occurs when you try to non-recursively delete a directory but it contains files.
     
     // using property extension added by the library
     if (exc.isDirectoryNotEmpty) {
-      print('Not empty!');
+      print('It is not empty!');
     }
     else {
       print('Unknown error: $exc');
