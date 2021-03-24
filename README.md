@@ -5,11 +5,15 @@
 A couple of **cross-platform** functions to help identify common errors when 
 working with the file system.
 
+
+<detail>
+    <title>why</title>
 Some OSs report missing file or missing parent directory as two different 
 errors. Others report both problems as the same error. Dart throws the same 
 type of exception not only for these two errors, but also for any file errors. 
 You can try to analyze the `int` error code, but error codes on different 
 systems are different.
+</detail>
 
 This library is designed to generalize error codes, reducing them to a "common 
 denominator". It interprets the [OSError.errorCode](https://api.dart.dev/stable/dart-io/OSError/errorCode.html) 
