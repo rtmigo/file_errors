@@ -9,6 +9,10 @@ These functions interpret the
 [OSError.errorCode](https://api.dart.dev/stable/dart-io/OSError/errorCode.html) 
 value depending on the current platform.
 
+Some systems report missing file or missing parent directory as two different 
+errors. Others generalize both problems to the same error code. In addition, 
+the error codes are different on different systems.
+
 ## isPathDoesNotExist
 
 Occurs when:
