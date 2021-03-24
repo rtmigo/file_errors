@@ -7,22 +7,21 @@ import 'package:file_errors/src/codes.dart';
 
 import 'codes.dart';
 
-bool isNoSuchPathException(FileSystemException exception) {
+bool _checkCode(FileSystemException exception, bool Function(int) check) {
   int? code = exception.osError?.errorCode;
-  return (code!=null) ? isNoSuchPathCode(code) : false;
+  return (code!=null) && check(code);
 }
 
-// bool isNoFileException(FileSystemException exception) {
-//   int? code = exception.osError?.errorCode;
-//   return (code!=null) ? isNoFileCode(code) : false;
-// }
-//
-// bool isNoDirectoryException(FileSystemException exception) {
-//   int? code = exception.osError?.errorCode;
-//   return (code!=null) ? isNoDirectoryCode(code) : false;
-// }
+bool isNoSuchPathException(FileSystemException exception) {
+  return _checkCode(exception, isNoSuchPathCode);
+}
+
+bool isNoSuchDirectoryException(FileSystemException exception) {
+  return _checkCode(exception, isNoSuchDirectoryCode);
+}
+
 
 bool isDirectoryNotEmptyException(FileSystemException exception) {
-  int? code = exception.osError?.errorCode;
-  return (code!=null) ? isNotEmptyCode(code) : false;
+  return _checkCode(exception, isNotEmptyCode);
 }
+

@@ -81,7 +81,9 @@ void main() {
   {
     // error
     testErrorCode('list',
-        mustMatchErrorCode: [isNoSuchPathCode],
+        //mustMatchErrorCode: [isNoSuchPathCode, ],
+        mustMatchException: [isNoSuchDirectoryException, isNoSuchPathException],
+        mustNotMatchException: [isDirectoryNotEmptyException],
         callForError: () {
           final nonExistentDir = Directory(path.join(tempDir.path, 'nonExistent'));
           nonExistentDir.listSync();
@@ -90,7 +92,7 @@ void main() {
     // error
     testErrorCode('open file for reading',
         mustMatchErrorCode: [isNoSuchPathCode],
-        mustMatchException: [isNoSuchPathException],
+        mustMatchException: [isNoSuchPathException, isNoSuchDirectoryException],
         mustNotMatchException: [isDirectoryNotEmptyException],
         callForError: () {
           File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
@@ -98,6 +100,7 @@ void main() {
 
     // error
     testErrorCode('open file for writing',
+        mustMatchException: [isNoSuchPathException, isNoSuchDirectoryException],
         mustMatchErrorCode: [isNoSuchPathCode],
         callForError: () {
           File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.write);
@@ -105,6 +108,7 @@ void main() {
 
     // error
     testErrorCode('create file',
+        mustMatchException: [isNoSuchPathException, isNoSuchDirectoryException],
         mustMatchErrorCode: [isNoSuchPathCode],
         callForError: ()=>File(path.join(tempDir.path, 'non_existent/file.txt')).createSync());
 

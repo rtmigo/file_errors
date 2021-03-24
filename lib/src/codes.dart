@@ -4,8 +4,9 @@
 import 'dart:io';
 
 import 'package:errno/errno.dart';
+import 'package:meta/meta.dart';
 
-bool _isNoDirectoryCode(int errorCode) {
+bool isNoSuchDirectoryCode(int errorCode) {
   // Ubuntu:
   // FileSystemException: Directory listing failed, path = '...'
   // (OS Error: No such file or directory, errno = 2)
@@ -68,5 +69,5 @@ bool _isNoFileCode(int errorCode) {
 }
 
 bool isNoSuchPathCode(int errorCode) {
-  return _isNoFileCode(errorCode) | _isNoDirectoryCode(errorCode);
+  return _isNoFileCode(errorCode) | isNoSuchDirectoryCode(errorCode);
 }
