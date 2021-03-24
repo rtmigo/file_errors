@@ -7,6 +7,9 @@
 
 **Cross-platform** extensions that help determine the **cause** of a caught `FileSystemException`.
 
+- `FileSystemException.isNoSuchFileOrDirectory`
+- `FileSystemException.isDirectoryNotEmpty`
+
 ## isNoSuchFileOrDirectory
 
 Occurs when:
