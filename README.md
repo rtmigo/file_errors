@@ -42,7 +42,7 @@ Occurs when:
     
   } on FileSystemException catch (exc) {
     
-    if (exc.isNoSuchFileOrDirectory) {
+    if (exc.isNoSuchFileOrDirectory) { // extension added by the library
       print('File does not exist!');
     }
     else {
