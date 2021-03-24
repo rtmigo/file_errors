@@ -2,8 +2,8 @@
 ![Generic badge](https://img.shields.io/badge/testing_on-Win_|_Mac_|_Linux-blue.svg)
 
 
-A couple of **cross-platform** functions to help identify the reason for the 
-`FileSystemException` to occur during file operations
+**Cross-platform** functions to help **identify** the reason for the 
+**`FileSystemException`** to occur during file operations.
 
 <details>
     <summary>What's the problem?</summary>
