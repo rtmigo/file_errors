@@ -11,10 +11,6 @@ a caught `FileSystemException`:
 - `FileSystemException.isNoSuchFileOrDirectory`
 - `FileSystemException.isDirectoryNotEmpty`
 
-[Installation instructions](https://pub.dev/packages/file_errors/install).
-
-# Use
-
 ## isNoSuchFileOrDirectory
 
 Occurs when:
