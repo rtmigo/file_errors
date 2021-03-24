@@ -1,6 +1,8 @@
 ![Generic badge](https://img.shields.io/badge/status-draft-red.svg)
 ![Generic badge](https://img.shields.io/badge/testing_on-Win_|_Mac_|_Linux-blue.svg)
 
+# [file_errors](https://github.com/rtmigo/file_errors)
+
 **Cross-platform** extensions that help determine the **cause** of a caught `FileSystemException`.
 
 Extensions were unit-tested on **Linux**, **Windows** and **MacOS**. 
