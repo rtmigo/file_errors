@@ -42,6 +42,9 @@ Occurs when:
   }
 ```
 
+There is also a `isNoSuchPathCode(int errorCode)` function, if you want to 
+interpret `OSError.errorCode` yourself.
+
 ## isDirectoryNotEmpty
 
 Occurs when you try to non-recursively delete a directory but it contains files.
