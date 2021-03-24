@@ -44,7 +44,7 @@ Occurs when:
     
     // using property extension added by the library
     if (exc.isNoSuchFileOrDirectory) { 
-      print('File does not exist!');
+      print('Does not exist!');
     }
     else {
       print('Unknown error: $exc');
