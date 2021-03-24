@@ -56,3 +56,9 @@ Occurs when you try to non-recursively delete a directory but it contains files.
     }
   }
 ```
+
+# Under the hood
+
+This library interprets the `OSError.errorCode` values depending on the
+current platform. It's two different error codes for `isNoSuchFileOrDirectory` 
+and three different error codes for `isDirectoryNotEmpty`. 
