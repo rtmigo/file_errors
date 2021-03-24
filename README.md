@@ -54,7 +54,7 @@ Occurs when you try to non-recursively delete a directory but it contains files.
   } on FileSystemException catch (exc) {
     
     if (isDirectoryNotEmptyException(exc)) {
-      print('No empty!');
+      print('Not empty!');
     }
     else {
       print('Unknown error: $exc');
