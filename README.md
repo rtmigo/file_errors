@@ -11,7 +11,7 @@ a caught `FileSystemException`:
 - `FileSystemException.isNoSuchFileOrDirectory`
 - `FileSystemException.isDirectoryNotEmpty`
 
-# Install
+[Installation instructions](https://pub.dev/packages/file_errors/install).
 
 # Use
 
