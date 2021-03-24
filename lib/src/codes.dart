@@ -6,7 +6,6 @@ import 'dart:io';
 import 'package:errno/errno.dart';
 import 'package:meta/meta.dart';
 
-@internal
 bool isNoSuchFileOrDirectoryCode(int errorCode) {
   //
   // Reading a non-existent file in an existing directory
