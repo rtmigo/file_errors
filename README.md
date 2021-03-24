@@ -3,7 +3,7 @@
 [![Actions Status](https://github.com/rtmigo/file_errors/workflows/unittest/badge.svg?branch=master)](https://github.com/rtmigo/file_errors/actions)
 ![Generic badge](https://img.shields.io/badge/testing_on-Win_|_Mac_|_Linux-blue.svg)
 
-# [file_errors](https://github.com/rtmigo/file_errors)
+# [package:file_errors](https://github.com/rtmigo/file_errors)
 
 **Cross-platform** extensions that help determine the **cause** of 
 a caught `FileSystemException`:
