@@ -12,11 +12,10 @@ value depending on the current platform.
 ## isPathDoesNotExist
 
 Occurs when:
-- Trying to open a non-existent file in existing directory
+- Trying to open a non-existent file in an existing directory
 - Trying to open a file in a non-existent directory
 - Trying to create a file in a non-existent directory
 - Trying to list a non-existent directory
-  
 
 ## isNotEmpty
 
