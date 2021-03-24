@@ -7,7 +7,7 @@ working with the file system.
 
 
 <details>
-    <summary>why</summary>
+    <summary>Whats the problem?</summary>
 Some OSs report missing file or missing parent directory as two different 
 errors. Others report both problems as the same error. Dart throws the same 
 type of exception not only for these two errors, but also for any file errors. 
