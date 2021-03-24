@@ -65,4 +65,4 @@ Occurs when you try to non-recursively delete a directory but it contains files.
   }
 ```
 
-Also available as as `isDirectoryNotEmpty(int errorCode)`.
+Also available as as `isDirectoryNotEmptyCode(int errorCode)`.
