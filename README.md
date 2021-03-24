@@ -22,7 +22,7 @@ Occurs when:
 ``` dart
   try {
     
-    print(File('filename.txt').readAsStringSync());
+    print(File('to_be_or_not_to_be.txt').readAsStringSync());
     
   } on FileSystemException catch (exc) {
     
