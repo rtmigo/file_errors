@@ -2,7 +2,7 @@
 ![Generic badge](https://img.shields.io/badge/testing_on-Win_|_Mac_|_Linux-blue.svg)
 
 
-**Cross-platform** functions to help **identify** the reason for the 
+**Cross-platform** functions to help **identify** the **reason** for the 
 **`FileSystemException`** to occur during file operations.
 
 <details>
