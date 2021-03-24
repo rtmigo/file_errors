@@ -7,11 +7,6 @@
 
 **Cross-platform** extensions that help determine the **cause** of a caught `FileSystemException`.
 
-Extensions were unit-tested on **Linux**, **Windows** and **MacOS**. 
-Mobile systems such as **Android** and **iOS** have the same kernels 
-as their desktop relatives. So their error codes are the same.
-
-
 ## isNoSuchFileOrDirectory
 
 Occurs when:
@@ -57,6 +52,12 @@ Occurs when you try to non-recursively delete a directory but it contains files.
     }
   }
 ```
+
+# Compatibility 
+
+The extensions were unit-tested on **Linux**, **Windows** and **MacOS**. 
+Mobile systems such as **Android** and **iOS** have the same kernels 
+as their desktop relatives. So their error codes are the same.
 
 # Under the hood
 
