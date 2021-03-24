@@ -11,7 +11,7 @@ value depending on the current platform.
 
 Some systems report missing file or missing parent directory as two different 
 errors. Others generalize both problems to the same error code. In addition, 
-the error codes are different on different systems.
+the error codes on different systems are different.
 
 ## isPathDoesNotExist
 
