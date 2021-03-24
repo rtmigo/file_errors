@@ -14,7 +14,7 @@ value depending on the current platform.
 Occurs when:
 - Trying to open a non-existent file in an existing directory
 - Trying to open a file in a non-existent directory
-- Trying to create a file in a non-existent directory
+- Trying to non-recursively create a file in a non-existent directory
 - Trying to list a non-existent directory
 
 ``` dart
@@ -35,4 +35,4 @@ Occurs when:
 
 ## isNotEmpty
 
-Occurs when you try to delete a directory but it contains files.
+Occurs when you try to non-recursively delete a directory but it contains files.
