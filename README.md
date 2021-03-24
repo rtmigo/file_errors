@@ -5,8 +5,7 @@
 
 Extensions were unit-tested on **Linux**, **Windows** and **MacOS**. 
 Mobile systems such as **Android** and **iOS** have the same kernels 
-as their desktop relatives. So the error messages are almost certainly 
-the same.
+as their desktop relatives. So their error codes are the same.
 
 
 ## isNoSuchFileOrDirectory
