@@ -2,29 +2,13 @@
 ![Generic badge](https://img.shields.io/badge/testing_on-Win_|_Mac_|_Linux-blue.svg)
 
 
-**Cross-platform** functions to help **identify** the **reason** for the 
+**Cross-platform** extensions to help **identify** the **reason** for the 
 **`FileSystemException`** to occur during file operations.
 
-<details>
-    <summary>What's the problem?</summary>
-  
-> How to understand that the exception was thrown due to the absence of a file?
->    
-> For some OSs a missing file and a missing parent directory are two 
-> different problems. Other OSs see them as the same problem. Dart 
-> throws the same type of exception not only for these two errors, 
-> but also for any file errors. The exception has `int` error code, but the 
-> error codes are different on different OSs.
-
-</details>
-
-This library is designed to generalize error codes, reducing them to a "common 
-denominator". It interprets the `OSError.errorCode` value depending on the 
-current platform.
-
-Functions unit-tested on **Linux**, **Windows** and **MacOS**. Mobile systems 
-such as **Android** and **iOS** have the same kernels as their desktop 
-relatives. So the error messages are almost certainly the same.
+Extensions were unit-tested on **Linux**, **Windows** and **MacOS**. 
+Mobile systems such as **Android** and **iOS** have the same kernels 
+as their desktop relatives. So the error messages are almost certainly 
+the same.
 
 
 ## isNoSuchFileOrDirectory
