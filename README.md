@@ -13,8 +13,8 @@ This library is designed to generalize error codes, reducing them to a "common
 denominator". It interprets the [OSError.errorCode](https://api.dart.dev/stable/dart-io/OSError/errorCode.html) 
 value depending on the current platform.
 
-Functions tested on **Linux**, **Windows** and **MacOS**. Mobile systems such as  
-**Android** and **iOS** have the same kernels as theis desktop relatives.
+Functions tested on **Linux**, **Windows** and **MacOS**. Mobile systems such 
+as **Android** and **iOS** have the same kernels as theis desktop relatives.
 So the error messages are almost certainly the same.
 
 
