@@ -42,6 +42,22 @@ Occurs when:
   }
 ```
 
-## isNotEmpty
+## isDirectoryNotEmpty
 
 Occurs when you try to non-recursively delete a directory but it contains files.
+
+``` dart
+  try {
+    
+   Directory('/path/to/useless').deleteSync();
+    
+  } on FileSystemException catch (exc) {
+    
+    if (isDirectoryNotEmptyException(exc)) {
+      print('File does not exist!');
+    }
+    else {
+      print('Unknown error: $exc');
+    }
+  }
+```

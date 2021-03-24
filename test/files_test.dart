@@ -91,7 +91,7 @@ void main() {
     testErrorCode('open file for reading',
         mustMatchErrorCode: [isNoFileOrParentCode],
         mustMatchException: [isPathDoesNotExistException],
-        mustNotMatchException: [isNotEmptyException],
+        mustNotMatchException: [isDirectoryNotEmptyException],
         callForError: () {
           File(path.join(tempDir.path, 'non_existent/file.txt')).openSync(mode: FileMode.read);
         });
@@ -118,7 +118,7 @@ void main() {
   // error
   testErrorCode('delete non-empty directory',
       mustMatchErrorCode: [isNotEmptyCode],
-      mustMatchException: [isNotEmptyException],
+      mustMatchException: [isDirectoryNotEmptyException],
       mustNotMatchException: [isPathDoesNotExistException],
       callBefore: () => File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write),
       callForError: ()=>tempDir.deleteSync());
@@ -156,7 +156,7 @@ void main() {
     testErrorCode('open for reading',
       mustMatchErrorCode: [isNoFileOrParentCode],
       mustMatchException: [isPathDoesNotExistException],
-      mustNotMatchException: [isNotEmptyException],
+      mustNotMatchException: [isDirectoryNotEmptyException],
       callForError: () {
         File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.read);
       }, );

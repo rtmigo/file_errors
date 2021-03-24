@@ -22,7 +22,7 @@ bool isPathDoesNotExistException(FileSystemException exception) {
 //   return (code!=null) ? isNoDirectoryCode(code) : false;
 // }
 
-bool isNotEmptyException(FileSystemException exception) {
+bool isDirectoryNotEmptyException(FileSystemException exception) {
   int? code = exception.osError?.errorCode;
   return (code!=null) ? isNotEmptyCode(code) : false;
 }
