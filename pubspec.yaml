@@ -1,5 +1,5 @@
 name: file_errors
-description: "Cross-platform extensions that help determine the cause of the caught FileSystemException"
+description: "Cross-platform extensions that help determine the cause of a caught FileSystemException"
 version: 0.0.0-dev
 homepage: https://github.com/rtmigo/xrandom
 
