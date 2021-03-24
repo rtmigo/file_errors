@@ -59,7 +59,7 @@ Occurs when you try to non-recursively delete a directory but it contains files.
 ``` dart
   try {
     
-   Directory('/path/to/useless').deleteSync();
+    Directory('/path/to/useless').deleteSync();
     
   } on FileSystemException catch (exc) {
     
