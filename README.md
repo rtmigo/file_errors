@@ -42,7 +42,7 @@ Occurs when:
     
   } on FileSystemException catch (exc) {
     
-    // checking property extension added by the library
+    // using property extension added by the library
     if (exc.isNoSuchFileOrDirectory) { 
       print('File does not exist!');
     }
@@ -63,6 +63,7 @@ Occurs when you try to non-recursively delete a directory but it contains files.
     
   } on FileSystemException catch (exc) {
     
+    // using property extension added by the library
     if (exc.isDirectoryNotEmpty) {
       print('Not empty!');
     }
