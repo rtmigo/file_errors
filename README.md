@@ -30,8 +30,8 @@ relatives. So the error messages are almost certainly the same.
 ## isNoSuchPath
 
 Occurs when:
-- Trying to open a non-existent file in an existing directory
-- Trying to open a file in a non-existent directory
+- Trying to read a non-existent file in an existing directory
+- Trying to read or write a file in a non-existent directory
 - Trying to non-recursively create a file in a non-existent directory
 - Trying to list a non-existent directory
 
