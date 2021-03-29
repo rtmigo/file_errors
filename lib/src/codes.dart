@@ -1,5 +1,5 @@
-// SPDX-FileCopyrightText: (c) 2021 Art Galkin <github.com/rtmigo>
-// SPDX-License-Identifier: UPL-1.0
+// SPDX-FileCopyrightText: (c) 2021 Artёm I.G. <github.com/rtmigo>
+// SPDX-License-Identifier: MIT
 
 import 'dart:io';
 

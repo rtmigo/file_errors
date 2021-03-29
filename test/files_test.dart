@@ -1,5 +1,5 @@
-// SPDX-FileCopyrightText: (c) 2021 Art Galkin <github.com/rtmigo>
-// SPDX-License-Identifier: BSD-3-Clause
+// SPDX-FileCopyrightText: (c) 2021 Artёm I.G. <github.com/rtmigo>
+// SPDX-License-Identifier: MIT
 
 import 'dart:io';
 
@@ -175,34 +175,4 @@ void main() {
         callBefore: () => File(path.join(tempDir.path, 'file.txt')).openSync(mode: FileMode.write),
         callForError: ()=>tempDir.deleteSync());
   });
-
-  //**group('deleting directory', () {}
-
-  // i was unable to simulate locking.
-  // it seems to be tied to a process, but not to a particular object
-  /*
-  testErrorCode('trying to open locked file',
-
-      callForError: () {
-        final p = path.join(tempDir.path, 'locked.txt');
-        final locked = File(p);
-        //locked.writeAsStringSync('lock me');
-        RandomAccessFile? raf;
-        try {
-          raf = locked.openSync(mode: FileMode.write);
-          raf.lockSync(FileLock.blockingExclusive, 0, 6);
-          raf.writeStringSync('written in exclusive mode');
-
-          File(p).writeAsStringSync('haha');
-
-        }
-        finally {
-          if (raf!=null ) {
-            raf.unlockSync();
-            raf.closeSync();
-          }
-        }
-
-        print('READ ${File(p).readAsStringSync()}');
-      });*/
 }
